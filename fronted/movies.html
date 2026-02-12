@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyFlix - Movies</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="text-white d-flex flex-column min-vh-100 bg-theme-4">
+
+  <header class="py-3 border-bottom border-secondary main-header">
+  <div class="container-fluid d-flex justify-content-between align-items-center px-4 px-lg-5">
+    
+    <div class="header-logo">
+      <a href="index.html">
+        <img src="images/logo.jpg" alt="MyFlix Logo" class="logo-img" />
+      </a>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark p-0">
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav gap-3 align-items-center">
+          <li class="nav-item"><a class="nav-link text-white" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="movies.html" aria-current="true">Movies</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="news.html">News</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="favorites.html">Favorites</a></li>
+
+          <a class="btn btn-danger px-3" id="loginBtn" href="login.html">Sign In</a>
+
+          <a class="btn btn-success px-3" id="profileBtn" href="profile.html" style="display:none;">
+            <i class="fas fa-user"></i>
+          </a>
+        </ul>
+      </div>
+    </nav>
+
+  </div>
+</header>
+
+
+  <main class="flex-grow-1 py-5 media-main-content">
+    <div class="container px-4 px-lg-5">
+
+      <h1 class="text-center mb-5 page-title">Movies</h1>
+
+      <section class="filter-section mb-5" aria-label="Content filters">
+        <div class="filter-header">
+          <h2 class="filter-title">Content Filter</h2>
+        </div>
+
+        <div class="filter-controls-wrapper">
+          <div class="filter-select-group" id="dropdown-filters">
+
+            <select class="filter-select" id="filter-genres" data-filter-key="genres">
+              <option value="">All Genres</option>
+              <option value="Action">Action</option>
+              <option value="Comedy">Comedy</option>
+              <option value="Drama">Drama</option>
+              <option value="Horror">Horror</option>
+              <option value="Sci-Fi">Sci-Fi</option>
+              <option value="Romance">Romance</option>
+              <option value="Thriller">Thriller</option>
+              <option value="Animation">Animation</option>
+              <option value="Documentary">Documentary</option>
+            </select>
+
+            <select class="filter-select" id="filter-year" data-filter-key="year">
+              <option value="">All Years</option>
+              <option value="2020s">2020 - 2029</option>
+              <option value="2010s">2010 - 2019</option>
+              <option value="2000s">2000 - 2009</option>
+              <option value="1990s">1990 - 1999</option>
+            </select>
+
+            <select class="filter-select" id="filter-rating" data-filter-key="rating">
+              <option value="">Any Rating</option>
+              <option value="1">1+</option>
+              <option value="2">2+</option>
+              <option value="3">3+</option>
+              <option value="4">4+</option>
+              <option value="5">5</option>
+            </select>
+
+          </div>
+
+          <button id="reset-filters-btn" class="reset-filters-btn">Reset Filters</button>
+        </div>
+
+        <div class="active-filters-wrapper">
+          <strong>Active filters:</strong>
+          <div id="active-filters-display" class="active-filters-display">
+            <span id="no-filters-msg" class="no-filters-msg">No filters selected.</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="search-section mb-4">
+        <div class="search-wrapper">
+          <input
+            type="text"
+            id="media-search"
+            class="search-input"
+            placeholder="Search movies..."
+            aria-label="Search movies"
+            autocomplete="off"
+          >
+        </div>
+      </div>
+<section id="adminPanel" class="bg-dark p-4 rounded mb-4" style="display:none;">
+  <h2 class="text-danger mb-3">Admin: Add Movie</h2>
+
+  <form id="adminAddMovieForm" class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label" for="adminTitle">Title</label>
+      <input class="form-control" id="adminTitle" type="text" required />
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label" for="adminYear">Year</label>
+      <input class="form-control" id="adminYear" type="number" min="1900" max="2100" required />
+    </div>
+
+    <div class="col-12">
+      <label class="form-label" for="adminGenres">Genres (comma separated)</label>
+      <input class="form-control" id="adminGenres" type="text" placeholder="Action, Sci-Fi, Thriller" required />
+      <small class="text-muted">
+        Allowed: Action, Comedy, Drama, Horror, Sci-Fi, Romance, Thriller, Animation, Documentary
+      </small>
+    </div>
+
+    <div class="col-12">
+      <label class="form-label" for="adminPosterUrl">Poster URL</label>
+      <input class="form-control" id="adminPosterUrl" type="url" required />
+    </div>
+
+    <div class="col-12">
+      <label class="form-label" for="adminTrailerUrl">Trailer URL (optional)</label>
+      <input class="form-control" id="adminTrailerUrl" type="text" />
+    </div>
+
+    <div class="col-12">
+      <label class="form-label" for="adminDescription">Description</label>
+      <textarea class="form-control" id="adminDescription" rows="3" required></textarea>
+    </div>
+
+    <div class="col-12 d-flex gap-2">
+      <button class="btn btn-danger" type="submit">Add Movie</button>
+      <div id="adminMsg" class="ms-2 align-self-center"></div>
+    </div>
+  </form>
+</section>
+
+
+      <section class="media-list-container" aria-label="Movies list">
+        <div class="row g-4 justify-content-center" id="media-list"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="text-light mt-auto pt-5 pb-3 border-top border-secondary main-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-4 mb-lg-0 footer-section">
+          <h3 class="footer-heading">About MyFlix</h3>
+          <p class="footer-text">MyFlix is your homepage for trending movies, series, and cartoons. We strive to provide the best content in a simple and user-friendly format.</p>
+        </div>
+        <div class="col-lg-3 offset-lg-1 mb-4 mb-lg-0 footer-section">
+          <h3 class="footer-heading">Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="movies.html" class="footer-link">Movies</a></li>
+            <li><a href="news.html" class="footer-link">News</a></li>
+            <li><a href="contact.html" class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4 footer-section">
+          <h3 class="footer-heading">Connect With Us</h3>
+          <div class="contact-info">
+            <p><i class="contact-icon fas fa-phone"></i> Phone: 87053915895</p>
+            <p><i class="contact-icon fas fa-envelope"></i> Email: farida02.03@icloud.com</p>
+          </div>
+          <div class="social-links">
+            <a href="https://instagram.com/farideepl" target="_blank" aria-label="Instagram" class="social-icon">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.tiktok.com/@farideepl" target="_blank" aria-label="TikTok" class="social-icon">
+              <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://t.me/fari_davv" target="_blank" aria-label="Telegram" class="social-icon">
+              <i class="fab fa-telegram-plane"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; Group Members: Alua Sagyndyk, Altynay Bolatova, Farida Dovletbaeva — 2025 MyFlix
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="js/app.js"></script>
+
+  <script src="js/filtering.js"></script>
+  <script type="module" src="js/movies-page.js"></script>
+
+</body>
+</html>

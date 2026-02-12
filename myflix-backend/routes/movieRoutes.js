@@ -1,25 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { 
-  getMovies, 
-  getMovie, 
-  createMovie, 
-  updateMovie, 
-  deleteMovie 
-} = require('../controllers/movieController');
-const { authenticate } = require('../middleware/authMiddleware');
-const { validateMovie } = require('../middleware/validationMiddleware');
 
-// Protect all routes
-router.use(authenticate);
+const movieController = require('../controllers/movieController');
+const { authenticate, authorize } = require('../middleware/authMiddleware');
+const { validateMovie } = require('../middleware/validationMiddleware'); // <-- импорт сверху
 
-router.route('/')
-  .get(getMovies)
-  .post(validateMovie, createMovie);
+router.get('/', movieController.getMovies);
+router.get('/:id', movieController.getMovieById);
 
-router.route('/:id')
-  .get(getMovie)
-  .put(validateMovie, updateMovie)
-  .delete(deleteMovie);
+router.post('/', authenticate, authorize('admin'), validateMovie, movieController.createMovie);
+router.put('/:id', authenticate, authorize('admin'), validateMovie, movieController.updateMovie);
+router.delete('/:id', authenticate, authorize('admin'), movieController.deleteMovie);
 
 module.exports = router;

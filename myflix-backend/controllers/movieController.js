@@ -1,126 +1,118 @@
+// controllers/movieController.js
+const mongoose = require('mongoose');
 const Movie = require('../models/Movie');
 
-exports.list = async (req, res, next) => {
-	try {
-		const { limit = 20, sort = '-rating', genre } = req.query;
-		const q = {};
-		if (genre) q.genre = genre;
-		const movies = await Movie.find(q).sort(sort).limit(parseInt(limit, 10));
-		res.json(movies);
-	} catch (err) {
-		next(err);
-	}
+function parseLimit(value, fallback = 20, max = 100) {
+  const n = parseInt(value, 10);
+  if (Number.isNaN(n) || n <= 0) return fallback;
+  return Math.min(n, max);
+}
+function parsePage(value, fallback = 1) {
+  const n = parseInt(value, 10);
+  if (Number.isNaN(n) || n <= 0) return fallback;
+  return n;
+}
+function isValidObjectId(id) {
+  return mongoose.Types.ObjectId.isValid(id);
 }
 
-// Get all movies for user
 exports.getMovies = async (req, res, next) => {
   try {
-    const movies = await Movie.find({ userId: req.user.userId })
-      .sort({ createdAt: -1 });
-    
-    res.json({ success: true, movies });
-  } catch (error) {
-    next(error);
-  }
-};
+    const { q, genre, year, sort = '-createdAt', limit, page } = req.query;
 
-// Get single movie
-exports.getMovie = async (req, res, next) => {
-  try {
-    const movie = await Movie.findOne({
-      _id: req.params.id,
-      userId: req.user.userId
-    });
+    const filter = {};
 
-    if (!movie) {
-      return res.status(404).json({ error: 'Movie not found' });
+    if (q && String(q).trim()) {
+      filter.title = { $regex: String(q).trim(), $options: 'i' };
+    }
+    if (genre && String(genre).trim()) {
+      filter.genre = String(genre).trim();
+    }
+    if (year) {
+      const y = parseInt(year, 10);
+      if (!Number.isNaN(y)) filter.year = y;
     }
 
-    res.json({ success: true, movie });
-  } catch (error) {
-    next(error);
+    const lim = parseLimit(limit);
+    const pg = parsePage(page);
+    const skip = (pg - 1) * lim;
+
+    const [movies, total] = await Promise.all([
+      Movie.find(filter).sort(sort).skip(skip).limit(lim),
+      Movie.countDocuments(filter)
+    ]);
+
+    res.json({
+      success: true,
+      movies,
+      pagination: {
+        page: pg,
+        limit: lim,
+        total,
+        pages: Math.ceil(total / lim)
+      }
+    });
+  } catch (err) {
+    next(err);
   }
 };
 
-// Create movie
+exports.getMovieById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    if (!isValidObjectId(id)) return res.status(400).json({ error: 'Invalid movie id' });
+
+    const movie = await Movie.findById(id);
+    if (!movie) return res.status(404).json({ error: 'Movie not found' });
+
+    res.json({ success: true, movie });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.createMovie = async (req, res, next) => {
   try {
-    const movieData = {
+    const movie = await Movie.create({
       ...req.body,
-      userId: req.user.userId
-    };
+      createdBy: req.user?.userId
+    });
 
-    const movie = await Movie.create(movieData);
-    
     res.status(201).json({ success: true, movie });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
-// Update movie
 exports.updateMovie = async (req, res, next) => {
   try {
-    const movie = await Movie.findOneAndUpdate(
-      { _id: req.params.id, userId: req.user.userId },
+    const { id } = req.params;
+    if (!isValidObjectId(id)) return res.status(400).json({ error: 'Invalid movie id' });
+
+    const movie = await Movie.findByIdAndUpdate(
+      id,
       req.body,
       { new: true, runValidators: true }
     );
 
-    if (!movie) {
-      return res.status(404).json({ error: 'Movie not found' });
-    }
+    if (!movie) return res.status(404).json({ error: 'Movie not found' });
 
     res.json({ success: true, movie });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
-// Delete movie
 exports.deleteMovie = async (req, res, next) => {
   try {
-    const movie = await Movie.findOneAndDelete({
-      _id: req.params.id,
-      userId: req.user.userId
-    });
+    const { id } = req.params;
+    if (!isValidObjectId(id)) return res.status(400).json({ error: 'Invalid movie id' });
 
-    if (!movie) {
-      return res.status(404).json({ error: 'Movie not found' });
-    }
+    const movie = await Movie.findByIdAndDelete(id);
+    if (!movie) return res.status(404).json({ error: 'Movie not found' });
 
     res.json({ success: true, message: 'Movie deleted successfully' });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
-};
-
-exports.getById = async (req, res, next) => {
-	try {
-		const movie = await Movie.findById(req.params.id);
-		if (!movie) return res.status(404).json({ error: 'Movie not found' });
-		res.json(movie);
-	} catch (err) {
-		next(err);
-	}
-};
-
-exports.search = async (req, res, next) => {
-	try {
-		const q = req.query.q || '';
-		const results = await Movie.find({ title: { $regex: q, $options: 'i' } }).limit(50);
-		res.json(results);
-	} catch (err) {
-		next(err);
-	}
-};
-
-// Admin/create endpoints (optional)
-exports.create = async (req, res, next) => {
-	try {
-		const movie = await Movie.create(req.body);
-		res.status(201).json(movie);
-	} catch (err) {
-		next(err);
-	}
 };

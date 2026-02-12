@@ -3,8 +3,11 @@ const { body, validationResult } = require('express-validator');
 const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+  return res.status(400).json({
+    error: errors.array().map(e => e.msg).join(', ')
+  });
+}
+
   next();
 };
 
@@ -31,21 +34,20 @@ exports.validateLogin = [
 ];
 
 exports.validateMovie = [
-  body('title')
-    .trim()
-    .notEmpty().withMessage('Title is required')
-    .escape(),
-  body('description')
-    .trim()
-    .notEmpty().withMessage('Description is required')
-    .escape(),
+  body('title').trim().notEmpty().withMessage('Title is required'),
+  body('description').trim().notEmpty().withMessage('Description is required'),
   body('year')
     .isInt({ min: 1900, max: new Date().getFullYear() })
     .withMessage(`Year must be between 1900 and ${new Date().getFullYear()}`),
   body('genre')
     .isArray({ min: 1 }).withMessage('At least one genre is required'),
-  body('status')
+  body('posterUrl')
     .optional()
-    .isIn(['watched', 'to_watch', 'watching']),
+    .isURL().withMessage('posterUrl must be a valid URL'),
+  body('trailerUrl')
+  .optional()
+  .matches(/^[a-zA-Z0-9_-]{6,20}$/)
+  .withMessage('trailerUrl must be a valid YouTube video ID'),
+
   handleValidationErrors
 ];

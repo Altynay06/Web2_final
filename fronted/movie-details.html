@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Details - MyFlix</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body { background-color: #000; color: #fff; }
+    .backdrop {
+      background-size: cover; background-position: center;
+      filter: blur(8px) brightness(0.4);
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+    .movie-poster { border-radius: 12px; max-width: 300px; width: 100%; }
+    .info-title { color: #ff4444; border-bottom: 2px solid #ff4444; }
+    .cast-list span { background: #222; border-radius: 20px; padding: 8px 16px; margin: 5px; display: inline-block; }
+    .comment-item { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .star { font-size: 1.8rem; cursor: pointer; color: #444; }
+    .star:hover, .star.selected { color: #ffcc00; }
+
+    .toast-message {
+      position: fixed; bottom: 30px; right: 30px;
+      background: rgba(26, 26, 26, 0.95); color: white;
+      padding: 15px 25px; border-radius: 10px;
+      z-index: 10000; border-left: 4px solid #28a745;
+      max-width: 300px;
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+  </style>
+</head>
+
+<body class="text-white d-flex flex-column min-vh-100">
+
+  <div class="backdrop" id="backdrop"></div>
+
+  <header class="py-3 border-bottom border-secondary main-header">
+  <div class="container-fluid d-flex justify-content-between align-items-center px-4 px-lg-5">
+    
+    <div class="header-logo">
+      <a href="index.html">
+        <img src="images/logo.jpg" alt="MyFlix Logo" class="logo-img" />
+      </a>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark p-0">
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav gap-3 align-items-center">
+          <li class="nav-item"><a class="nav-link text-white" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="movies.html">Movies</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="news.html">News</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="favorites.html">Favorites</a></li>
+
+          <a class="btn btn-danger px-3" id="loginBtn" href="login.html">Sign In</a>
+
+          <a class="btn btn-success px-3" id="profileBtn" href="profile.html" style="display:none;">
+            <i class="fas fa-user"></i>
+          </a>
+        </ul>
+      </div>
+    </nav>
+
+  </div>
+</header>
+
+
+  <main class="flex-grow-1">
+    <div class="container py-5">
+
+      <a href="movies.html" class="btn btn-outline-danger mb-4">← Back to Movies</a>
+
+      <div id="movie-details" class="bg-dark p-4 rounded"></div>
+
+      <div class="trailer-container mt-5 bg-dark p-4 rounded">
+        <h3 class="text-danger mb-3"><i class="fas fa-play"></i> Trailer</h3>
+        <div class="ratio ratio-16x9">
+          <iframe id="trailerVideo" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+  <div class="col-lg-8">
+    <div class="comments-section bg-dark p-4 rounded">
+      <h3 class="text-danger mb-4"><i class="fas fa-comments"></i> Comments</h3>
+
+      <div class="comment-form mb-4 p-3 bg-black rounded">
+        <textarea id="commentText" class="form-control bg-dark text-white mb-2" rows="3" placeholder="Write your comment..."></textarea>
+        <button id="submitComment" class="btn btn-danger w-100">Post Comment</button>
+      </div>
+
+      <div id="commentsList">
+        <p class="text-center text-muted">Loading comments...</p>
+      </div>
+    </div>
+  </div>
+
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="js/app.js"></script>
+
+  <script type="module" src="js/detail.js"></script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News - MyFlix</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body class="text-white d-flex flex-column min-vh-100 bg-theme-4">
+
+ <header class="py-3 border-bottom border-secondary main-header">
+  <div class="container-fluid d-flex justify-content-between align-items-center px-4 px-lg-5">
+    
+    <div class="header-logo">
+      <a href="index.html">
+        <img src="images/logo.jpg" alt="MyFlix Logo" class="logo-img" />
+      </a>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark p-0">
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav gap-3 align-items-center">
+          <li class="nav-item"><a class="nav-link text-white" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="movies.html">Movies</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="news.html" aria-current="true">News</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="favorites.html">Favorites</a></li>
+
+          <a class="btn btn-danger px-3" id="loginBtn" href="login.html">Sign In</a>
+
+          <a class="btn btn-success px-3" id="profileBtn" href="profile.html" style="display:none;">
+            <i class="fas fa-user"></i>
+          </a>
+        </ul>
+      </div>
+    </nav>
+
+  </div>
+</header>
+
+
+  <main class="flex-grow-1 py-5">
+    <div class="container px-4 px-lg-5">
+
+      <div class="main-header-wrapper text-center mb-5">
+        <h1 class="text-center mb-5 page-title">Latest Movie & Actor News</h1>
+        <span id="currentDateTime" class="datetime-display"></span>
+      </div>
+
+      <div class="row mb-5 justify-content-center">
+        <div class="col-12 col-lg-10">
+          <div id="newsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+              <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+              <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="5" aria-label="Slide 6"></button>
+              <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="6" aria-label="Slide 7"></button>
+              <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="7" aria-label="Slide 8"></button>
+              <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="8" aria-label="Slide 9"></button>
+            </div>
+
+            <div class="carousel-inner rounded-3 shadow-lg">
+              <div class="carousel-item active" data-bs-interval="3000">
+                <img src="images/Miss-Piggy-Movie.jpg" class="d-block w-100" alt="Movie Scene 1">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 p-2 rounded-top">
+                  <h5>Jennifer Lawrence And Emma Stone Plotting Miss Piggy Muppet Movie With Tony Winner Cole Escola</h5>
+                </div>
+              </div>
+
+              <div class="carousel-item" data-bs-interval="3000">
+                <img src="images/Heat-2.jpg" class="d-block w-100" alt="Actor Portrait 2">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 p-2 rounded-top">
+                  <h5>Heat 2 Officially Happening — Michael Mann To Direct, Leonardo DiCaprio Circling To Star</h5>
+                </div>
+              </div>
+
+              <div class="carousel-item" data-bs-interval="3000">
+                <img src="images/linda-hamilton-stranger-things.jpg" class="d-block w-100" alt="Behind the Scenes 3">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 p-2 rounded-top">
+                  <h5>Linda Hamilton Is 'A Hyper-Intelligent And Intimidating' Antagonist In Stranger Things 5</h5>
+                </div>
+              </div>
+
+              <div class="carousel-item" data-bs-interval="3000">
+                <img src="images/Useful-Idiots.jpg" class="d-block w-100" alt="Animated Movie 4">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 p-2 rounded-top">
+                  <h5>Sigourney Weaver And Meryl Streep To Star Together For The First Time In Thriller Useful Idiots</h5>
+                </div>
+              </div>
+
+              <div class="carousel-item" data-bs-interval="3000">
+                <img src="images/kill-bill-whole-bloody-affair.jpg" class="d-block w-100" alt="Series Poster 5">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 p-2 rounded-top">
+                  <h5>Kill Bill: The Whole Bloody Affair Trailer Teases Full Uncut Version Of Tarantino's Action Blowout</h5>
+                </div>
+              </div>
+
+              <div class="carousel-item" data-bs-interval="3000">
+                <img src="images/The-Testament-Of-Ann-Lee.jpg" class="d-block w-100" alt="Director Shot 6">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 p-2 rounded-top">
+                  <h5>The Testament Of Ann Lee Trailer: Amanda Seyfried Leads Mona Fastvold's Historical Epic Musical</h5>
+                </div>
+              </div>
+
+              <div class="carousel-item" data-bs-interval="3000">
+                <img src="images/gremlins.jpg" class="d-block w-100" alt="Movie Award 7">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 p-2 rounded-top">
+                  <h5>Gremlins 3 Confirmed At Warner Bros With Chris Columbus And Steven Spielberg Returning</h5>
+                </div>
+              </div>
+
+              <div class="carousel-item" data-bs-interval="3000">
+                <img src="images/wicked-for-good-elphaba-wizard.jpg" class="d-block w-100" alt="Behind the Scenes 8">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 p-2 rounded-top">
+                  <h5>Wicked: For Good: Cynthia Erivo Teases Elphaba's 'Really Special' New Song 'No Place Like Home'</h5>
+                </div>
+              </div>
+
+              <div class="carousel-item" data-bs-interval="3000">
+                <img src="images/michael-biopic-movie-trailer.jpg" class="d-block w-100" alt="Movie Poster 9">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 p-2 rounded-top">
+                  <h5>Michael Jackson Biopic Unveils First Trailer Spanning Decades Of His Career</h5>
+                </div>
+              </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 justify-content-center" id="news-container">
+        <div class="col-12">
+          <div class="media-card" style="max-width: 900px; margin: 0 auto;">
+            <img src="images/tom holland.jpg" alt="Tom Holland" class="img-fluid">
+            <div>
+              <h3>Tom Holland Hospitalised After Spider-Man Fall</h3>
+              <p>
+                Tom Holland suffered a minor concussion on the set of <em>Spider-Man: Brand New Day</em>. Shooting is expected to continue soon.
+                <a href="https://ew.com/tom-holland-hospitalized-after-fall-on-spider-man-set-11814268" target="_blank" class="text-danger text-decoration-none">Read more</a>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="media-card" style="max-width: 900px; margin: 0 auto;">
+            <img src="https://static1.srcdn.com/wordpress/wp-content/uploads/2024/02/tron-ares-ares-jared-leto.jpg" alt="Tron: Ares" class="img-fluid">
+            <div>
+              <h3>Tron: Ares Coming in 2025</h3>
+              <p>
+                The highly anticipated <em>Tron: Ares</em> will premiere on October 10, 2025, starring Jared Leto, Greta Lee, and Evan Peters.
+                <a href="https://en.wikipedia.org/wiki/Tron:Ares" target="_blank" class="text-danger text-decoration-none">Read more</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="text-light mt-auto pt-5 pb-3 border-top border-secondary main-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-4 mb-lg-0 footer-section">
+          <h3 class="footer-heading">About MyFlix</h3>
+          <p class="footer-text">MyFlix is your homepage for trending movies, series, and cartoons. We strive to provide the best content in a simple and user-friendly format.</p>
+        </div>
+        <div class="col-lg-3 offset-lg-1 mb-4 mb-lg-0 footer-section">
+          <h3 class="footer-heading">Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="movies.html" class="footer-link">Movies</a></li>
+            <li><a href="news.html" class="footer-link">News</a></li>
+            <li><a href="contact.html" class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4 footer-section">
+          <h3 class="footer-heading">Connect With Us</h3>
+          <div class="contact-info">
+            <p><i class="contact-icon fas fa-phone"></i> Phone: 87053915895</p>
+            <p><i class="contact-icon fas fa-envelope"></i> Email: farida02.03@icloud.com</p>
+          </div>
+          <div class="social-links">
+            <a href="https://instagram.com/farideepl" target="_blank" aria-label="Instagram" class="social-icon">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.tiktok.com/@farideepl" target="_blank" aria-label="TikTok" class="social-icon">
+              <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://t.me/fari_davv" target="_blank" aria-label="Telegram" class="social-icon">
+              <i class="fab fa-telegram-plane"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; Group Members: Alua Sagyndyk, Altynay Bolatova, Farida Dovletbaeva — 2025 MyFlix
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <script type="module" src="js/app.js"></script>
+  <script src="js/datetime.js"></script>
+
+
+
+
+</body>
+</html>
